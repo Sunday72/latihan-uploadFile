@@ -63,3 +63,26 @@ function hapusBarang($data)
 
   return mysqli_affected_rows($conn);
 }
+
+function editBarang($data)
+{
+  global $conn;
+
+  $id = $data["id_barang"];
+  $namaBarang = $data["nama_barang"];
+  $stok = $data["stok"];
+  $kategori = $data["kategori"];
+  $fotoLama = $data["foto_lama"];
+
+  if ($_FILES["foto"]["error"] == 4) {
+    $foto = $fotoLama;
+  } else {
+    $imgpath = "img/foto_barang/" . $fotoLama;
+    unlink($imgpath);
+    $foto = upload();
+  }
+
+  mysqli_query($conn, "UPDATE barang SET nama_barang='$namaBarang', stok='$stok', kategori='$kategori', foto='$foto' WHERE id_barang = '$id'");
+
+  return mysqli_affected_rows($conn);
+}
