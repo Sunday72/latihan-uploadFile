@@ -47,3 +47,19 @@ function upload()
 
   return $filename;
 }
+
+function hapusBarang($data)
+{
+  global $conn;
+
+  $id = $data["id_barang"];
+  $foto = $data["foto"];
+
+  // HAPUS FOTO DARI FOLDER IMG/FOTO_BARANG
+  $imgpath = "img/foto_barang/" . $foto;
+  unlink($imgpath);
+
+  mysqli_query($conn, "DELETE FROM barang WHERE id_barang='$id'");
+
+  return mysqli_affected_rows($conn);
+}

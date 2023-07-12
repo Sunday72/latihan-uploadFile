@@ -3,10 +3,16 @@
 include "function/function.php";
 
 if (isset($_POST['tambah_barang'])) {
-  if(tambahBarang($_POST)){
+  if (tambahBarang($_POST)) {
     echo "<script>alert('Berhasil tambah barang!')</script>";
   } else {
     echo "<script>alert('Gagal tambah barang!')</script>";
+  }
+}
+
+if (isset($_POST["hapus_barang"])) {
+  if (hapusBarang($_POST)) {
+    echo "<script>alert('berhasil menghapus data!')</script>";
   }
 }
 
@@ -74,8 +80,12 @@ $no = 1;
             <img src="img/foto_barang/<?= $barang["foto"] ?>" alt="Foto Barang" width="100px">
           </td>
           <td>
-            <button disabled>Edit</button>
-            <button disabled>Hapus</button>
+              <button disabled>Edit</button>
+              <form action="" method="post" onsubmit="return confirm('yakin ingin menghapus barang <?= $barang['nama_barang'] ?> ?')" style="display: inline;">
+                <input type="hidden" name="id_barang" value="<?= $barang["id_barang"] ?>">
+                <input type="hidden" name="foto" value="<?= $barang["foto"] ?>">
+                <button name="hapus_barang">Hapus</button>
+              </form>
           </td>
         </tr>
       <?php $no++;
